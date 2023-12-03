@@ -52,4 +52,4 @@ with open("input.txt", "r") as input_file:
             result += index + 1
 
 
-print(result)
+print(f"The sum of the IDs of the possible games is {result}.")
