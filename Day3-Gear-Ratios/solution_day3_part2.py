@@ -1,18 +1,16 @@
 import random
 
 
-def find_symbols(strings):
+def find_asterix(strings):
     """Find symbols in the engine schematics matrix and save their locations in a list of tuples"""
-    symbol_locations_list = []
+    asterix_locations_list = []
 
     for i, string in enumerate(strings):
         for j, char in enumerate(string):
-            if char.isalnum() or char == '.':
-                continue
-            else:
-                symbol_locations_list.append((i, j))
+            if char == "*":
+                asterix_locations_list.append((i, j))
 
-    return symbol_locations_list
+    return asterix_locations_list
 
 
 def extract_numbers_with_variations(strings):
@@ -61,23 +59,58 @@ with open("input_day3.txt", "r") as input_file:
     lines = [line.strip() for line in lines]
 
 
-symbol_locations = find_symbols(lines)
+asterix_locations = find_asterix(lines)
 adjacent_number_locations = extract_numbers_with_variations(lines)
-part_codes = []
+
+# removing duplicate locations
+for number_code, locations in adjacent_number_locations.items():
+    adjacent_number_locations[number_code] = list(set(locations))
+
+part_codes = {}
+
+# creating dictionary with all part codes
+for number_code, locations in adjacent_number_locations.items():
+    part_codes[number_code] = []
 
 # checking each number and adjacent location and if it is in symbol locations, adding it to a list of part codes
 for number_code, locations in adjacent_number_locations.items():
     for location in locations:
-        if location in symbol_locations:
-            part_codes.append(number_code)
+        if location in asterix_locations:
+            part_codes[number_code].append(location)
 
-# turning part_codes into set to remove duplicates
-part_codes_set = set(part_codes)
+
+part_codes_dict = {}
+
+# mapping all part codes that have locations saved
+for part_code, value in part_codes.items():
+    if value:
+        part_codes_dict[part_code] = value
+
+# Dictionary to store keys from part_codes_dict based on common value
+value_to_keys = {}
+
+# Populate the value_to_keys dictionary
+for key, value in part_codes_dict.items():
+
+    value_tuple = tuple(value)
+
+    if value_tuple not in value_to_keys:
+        value_to_keys[value_tuple] = [key]
+    else:
+        value_to_keys[value_tuple].append(key)
+
+# Filter out items with only one key in the list (no duplicates)
+duplicates = {k: v for k, v in value_to_keys.items() if len(v) > 1}
+
 result = 0
 
-# extracting part number from each part code and adding it to the result
-for part_code in part_codes_set:
-    code = int(part_code.split("-")[2])
-    result += code
 
-print(f"The sum of all of the part numbers in the engine schematic is {result}")
+#
+for value_tuple, keys in duplicates.items():
+    part_1 = int(keys[0].split("-")[2])
+    part_2 = int(keys[1].split("-")[2])
+    multiplication = part_1 * part_2
+    result += multiplication
+
+
+print(f"The sum of all of the gear ratios in engine schematic is {result}.")
