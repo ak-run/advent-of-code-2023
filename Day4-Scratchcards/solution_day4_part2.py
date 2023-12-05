@@ -17,27 +17,19 @@ def get_list_of_matches(scratchcard_list):
     return matches_list
 
 
-# def calculate_points(number):
-#     """Calculate points based on number of matches"""
-#     if number == 0:
-#         return 0
-#     elif number == 1:
-#         return 1
-#     else:
-#         return 2 ** (number - 1)
-#
-#
 def get_all_scratchcards(matches_list):
-    """Return the total points for scratchcard pile"""
-    scratchcards_pile = []
-    for index, match in enumerate(matches_list):
+    """Return the total number of scratchcards won"""
+    scratchcards_count = [1] * len(matches_list)
+
+    for i in range(len(matches_list)):
+        match = matches_list[i]
         length = len(match)
-        if length == 0:
-            scratchcards_pile.append(match)
-        else:
-            for num in range(length+1):
-                scratchcards_pile.append(match)
-    return scratchcards_pile
+
+        if length > 0:
+            for j in range(i + 1, i + length + 1):
+                scratchcards_count[j] += scratchcards_count[i]
+
+    return sum(scratchcards_count)
 
 
 with open("input_day4.txt", "r") as input_file:
@@ -48,7 +40,6 @@ with open("input_day4.txt", "r") as input_file:
 scratchcards = get_scratchcards_list(lines)
 matches = get_list_of_matches(scratchcards)
 all_scratchcards = get_all_scratchcards(matches)
-number_of_scratchcards = len(all_scratchcards)
 
 
-print(f"Elf has {number_of_scratchcards} scratchcards.")
+print(f"Elf has {all_scratchcards} scratchcards.")
