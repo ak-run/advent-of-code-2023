@@ -12,8 +12,8 @@ def hand_sort(hand):
 
 
 # Function to categorise hands based on character counts and sort each list
-def categorize_and_sort(data):
-    categorized_hands = {
+def categorise_and_sort(data):
+    categorised_hands = {
         'Five of a kind': [],
         'Four of a kind': [],
         'Full house': [],
@@ -44,17 +44,17 @@ def categorize_and_sort(data):
             category = 'High card'
 
         # Append the hand to the categorised hands
-        categorized_hands[category].append(hand)
+        categorised_hands[category].append(hand)
 
     # Sort each list based on the sorting function
-    for category, hands in categorized_hands.items():
-        categorized_hands[category] = sorted(hands, key=hand_sort)
+    for category, hands in categorised_hands.items():
+        categorised_hands[category] = sorted(hands, key=hand_sort)
 
-    return categorized_hands
+    return categorised_hands
 
 
 # Categorise the hands based on character counts and sort each list
-categorised_data = categorize_and_sort(data)
+categorised_data = categorise_and_sort(data)
 
 number_of_hands = len(data)
 result = 0
