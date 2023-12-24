@@ -12,10 +12,15 @@ def win_race(record_holding_race):
     """Function that takes a tuple with time and distance and calculates number of ways to break a record"""
     time_value, distance_value = record_holding_race
     ways_to_break_record = 0
-    for num in range(1, time_value):
-        if (time_value - num) * num > distance_value:
-            ways_to_break_record += 1
-    return ways_to_break_record
+    # Loop from the front to find starting position
+    for first_record_breaking_pos in range(1, time_value):
+        if (time_value - first_record_breaking_pos) * first_record_breaking_pos > distance_value:
+            break  # Break the loop when the first match is found
+    # Loop from the back to find finishing position
+    for last_record_breaking_pos in range(time_value - 1, 0, -1):
+        if (time_value - last_record_breaking_pos) * last_record_breaking_pos > distance_value:
+            break  # Break the loop when the first match is found
+    return last_record_breaking_pos - first_record_breaking_pos + 1
 
 
 result = 1
