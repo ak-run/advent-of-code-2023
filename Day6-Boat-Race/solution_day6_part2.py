@@ -4,7 +4,7 @@ distance_values = [244104712281040]
 # Zip the two lists
 zipped_data = zip(time_values, distance_values)
 
-# Convert the result to a list (optional, for visualization purposes)
+# Convert the result to a list
 record_races_list = list(zipped_data)
 
 
