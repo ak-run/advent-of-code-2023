@@ -14,13 +14,13 @@ def hand_sort(hand):
 # Function to categorise hands based on character counts and sort each list
 def categorise_and_sort(data):
     categorised_hands = {
-        'Five of a kind': [],
-        'Four of a kind': [],
-        'Full house': [],
-        'Three of a kind': [],
-        'Two pair': [],
-        'One pair': [],
-        'High card': []
+        "Five of a kind": [],
+        "Four of a kind": [],
+        "Full house": [],
+        "Three of a kind": [],
+        "Two pair": [],
+        "One pair": [],
+        "High card": []
     }
 
     for hand in data:
@@ -29,19 +29,19 @@ def categorise_and_sort(data):
         char_counts = {card: hand[0].count(card) for card in set(hand[0])}
 
         if 5 in char_counts.values():
-            category = 'Five of a kind'
+            category = "Five of a kind"
         elif 4 in char_counts.values():
-            category = 'Four of a kind'
+            category = "Four of a kind"
         elif 3 in char_counts.values() and 2 in char_counts.values():
-            category = 'Full house'
+            category = "Full house"
         elif 3 in char_counts.values():
-            category = 'Three of a kind'
+            category = "Three of a kind"
         elif list(char_counts.values()).count(2) == 2:
-            category = 'Two pair'
+            category = "Two pair"
         elif 2 in char_counts.values():
-            category = 'One pair'
+            category = "One pair"
         else:
-            category = 'High card'
+            category = "High card"
 
         # Append the hand to the categorised hands
         categorised_hands[category].append(hand)
