@@ -21,20 +21,24 @@ for line in lines[1:]:
     network[var_name] = values
 
 
-result = 0
-position = "AAA"
-# While loop to find ZZZ
-while position != "ZZZ":
-    # accessing next direction from the cycle object
-    direction = next(directions_cycle)
-    # if direction is L access left node, if right, right node, update result
-    if direction == "L":
-        result += 1
-        position = network.get(position)[0]
-    else:
-        result += 1
-        position = network.get(position)[1]
+def steps_to_get_to_z(node, network):
+    """Function to calculate number of steps to get to node ending with Z"""
+    num_of_steps = 0
+    # While loop to find node ending with Z
+    while node[-1] != "Z":
+        # accessing next direction from the cycle object
+        direction = next(directions_cycle)
+        # if direction is L access left node, if right, right node, update result
+        if direction == "L":
+            num_of_steps += 1
+            node = network.get(node)[0]
+        else:
+            num_of_steps += 1
+            node = network.get(node)[1]
+    return num_of_steps
 
+
+result = steps_to_get_to_z("AAA", network)
 print(f"{result} steps are required to reach ZZZ.")
 
 
